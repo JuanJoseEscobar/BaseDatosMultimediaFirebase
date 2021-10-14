@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="icon" type="image/jpg" href="./IMG/pjEHfbdn.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="card text-black bg-light mb-3" style="max-width: 100%;">
+            <div class="card-header text-center">Bienvenido</div>
+            <div class="card-body">
+                <div id="badformat" class="alert alert-danger" role="alert" style="display: none;">
+                    El formato de imagen es inválido
+                </div>
+                <div class="formu">
+                    <form class="row g-2" id = "formulario" method="POST">
+                        <div class="mb-3 ">
+                            <label for="formFile" class="form-label">¡Subir imagen de perfil!</label>
+                        </div>
+                        <div class="col-md-4" style="text-align: center;">
+                            <img id="blah" class="border border-dark" src="#" style="object-fit: cover;" alt="UserIMG">
+                        </div>
+                        <div class="mb-3 col-md-8">
+                            <input class="form-control" type="file" id="formFile" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputUser" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="userName" placeholder="Ingrese su usuario" name = "userName"
+                                required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Ingrese su email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputPasswordNEW" class="form-label">Contraseña <span style="cursor: pointer;" title="El debe tener 8 caracteres, minimo una mayuscula y un numero"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg></span>
+                            </label>
+                            <input type="password" class="form-control" id="inputPasswordNEW"
+                                placeholder="Ingrese su contraseña"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,24}" title="debe tener 8 caracteres, minimo una mayuscula y un numero" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputZip" class="form-label">Formato valido</label>
+                            <input type="text" class="form-control" id="RENEW" value = 'NO' style="color: red;" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="inputAddress" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="inputAddress"
+                                placeholder="Carrera 1B norte # 83 - 23" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputPasswordCON" class="form-label">Confirmar Contraseña</label>
+                            <input type="password" class="form-control" id="inputPasswordCON"
+                                placeholder="Ingrese su contraseña"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,24}" title="deve tener 8 caracteres, minimo una mayuscula y un numero" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputZip" class="form-label">Coinciden</label>
+                            <input type="text" class="form-control" id="RECON" value = 'NO' style="color: red;" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputCity" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="inputCity" placeholder="Ingrese su ciudad"
+                                required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputState" class="form-label">Estado</label>
+                            <select id="inputState" class="form-select">
+                                <option selected>lonely Soul</option>
+                                <option>Soltero</option>
+                                <option>Casado</option>
+                                <option>Viudo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputZip" class="form-label">Zip</label>
+                            <input type="text" class="form-control" id="inputZip" required>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                                <label class="form-check-label" for="gridCheck">
+                                    Check me out
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <script type="module" src="../src/app.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</body>
+
+</html>
