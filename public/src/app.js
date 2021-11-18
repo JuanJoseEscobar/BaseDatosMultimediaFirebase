@@ -5,6 +5,7 @@ import { getDatabase, ref, set, child, update, remove, get } from "https://www.g
 import * as firebase2 from "https://www.gstatic.com/firebasejs/9.1.1/firebase-database.js";
 import { getStorage, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";/** */
 import * as firebase from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";/**********AREGLAR EN UN FUTUROOOOOOOOOOOO********** */
+import * as firebaseLogin from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";/**********AREGLAR EN UN FUTUROOOOOOOOOOOO********** */
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-analytics.js";/** */
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -61,11 +62,12 @@ document.getElementById('formFile').onchange = function (e) {
             
             //Guardando la imagen
             imagenidi = e.target.files[0];
+            document.getElementById("badformat").style.display ="none";
            
         };
     }
     else {
-        alert("Formato no valido solo PNG, JPEG o JPG");
+        document.getElementById("badformat").style.display ="block";
         e.target.type = '';
         e.target.type = 'file';
     }
@@ -115,50 +117,69 @@ const formulario = document.getElementById('formulario')
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const estend = imagenidi.name.split('.');
-    uploadBytes(firebase.ref(storage, "Usuarios/IMG" + document.getElementById('userName').value +"."+ estend[estend.length - 1]),//subir la foto
-        imagenidi,
-    )
-        .then(() => {
-            getDownloadURL(firebase.ref(storage, "Usuarios/IMG" + document.getElementById('userName').value +"."+ estend[estend.length - 1])).then(function (e) {//descargar URL
-                //console.log(e)
+    //*********create FirebaseLogin******
+    var idUser = null;
+    const auth = firebaseLogin.getAuth(app);
+    firebaseLogin.createUserWithEmailAndPassword(auth,document.getElementById('inputEmail4').value, document.getElementById('inputPasswordNEW').value)
+    .then((CredencialesUsuario) => {
+        console.log('usuario creado logeado');
+        console.log(CredencialesUsuario);
+        console.log('LocalID: '+CredencialesUsuario.user.reloadUserInfo.localId);
+        idUser = CredencialesUsuario.user.reloadUserInfo.localId;
+        
+    
+        //*******Fin create FirebaseLogin ******
 
-                //guardar todos los atrivutos de usuarioooo
-                const UsuarioInput = {
-                    nombre: document.getElementById('userName').value,
-                    email: document.getElementById('inputEmail4').value,
-                    password: document.getElementById('inputPasswordNEW').value,
-                    direccion: document.getElementById('inputAddress').value,
-                    ciudad: document.getElementById('inputCity').value,
-                    estado: document.getElementById('inputState').value,
-                    zip: document.getElementById('inputZip').value,
-                    linkImg: e,
-                };
+        const estend = imagenidi.name.split('.');
+        uploadBytes(firebase.ref(storage, "Usuarios/IMG" + document.getElementById('userName').value +"."+ estend[estend.length - 1]),//subir la foto
+            imagenidi,
+        )
+            .then(() => {
+                getDownloadURL(firebase.ref(storage, "Usuarios/IMG" + document.getElementById('userName').value +"."+ estend[estend.length - 1])).then(function (e) {//descargar URL
+                    //console.log(e)
 
-                console.log("Datos");
-                Object.entries(UsuarioInput).forEach(element => {
-                    console.log(`${element[0]}: ${element[1]}`);
-                });
+                    //guardar todos los atrivutos de usuarioooo
+                    const UsuarioInput = {
+                        nombre: document.getElementById('userName').value,
+                        email: document.getElementById('inputEmail4').value,
+                        password: document.getElementById('inputPasswordNEW').value,
+                        direccion: document.getElementById('inputAddress').value,
+                        ciudad: document.getElementById('inputCity').value,
+                        estado: document.getElementById('inputState').value,
+                        zip: document.getElementById('inputZip').value,
+                        linkImg: e,
+                        id: idUser,
+                        superUser: 0,
+                    };
 
-                //mandando los atrivutos al firebase database
-                set(ref(database, `Usuarios/${UsuarioInput.nombre}`),///mandando los atrivutos al firebase database
-                    UsuarioInput
-                ).then(() => {//then es un ecuchador
-                    //borrando parametros de los imputs
-                    Object.entries(inputsUser).forEach(element => {
-                        element[1].value = "";
+                    console.log("Datos");
+                    Object.entries(UsuarioInput).forEach(element => {
+                        console.log(`${element[0]}: ${element[1]}`);
                     });
-                    document.getElementById('formFile').value = "";
-                    document.querySelector('#blah').src = "";
-                    alert("Los datos han sido enviados");
-                })
-                    .catch((e) => {
-                        alert("Error: " + e);
-                    });
 
-            }
-            );
-        });
+                    //mandando los atrivutos al firebase database
+                    set(ref(database, `Usuarios/${UsuarioInput.id}`),///mandando los atrivutos al firebase database
+                        UsuarioInput
+                    ).then(() => {//then es un ecuchador
+                        //borrando parametros de los imputs
+                        Object.entries(inputsUser).forEach(element => {
+                            element[1].value = "";
+                        });
+                        document.getElementById('formFile').value = "";
+                        document.querySelector('#blah').src = "";
+
+
+                        alert("Los datos han sido enviados");
+                    })
+                        .catch((e) => {
+                            alert("Error: " + e);
+                        });
+
+                }
+                );
+            });
+
+    });
 
 
 });

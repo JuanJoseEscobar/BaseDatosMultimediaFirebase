@@ -2,9 +2,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getDatabase, ref, set, child, update, remove, get } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-database.js";
-import * as firebase2 from "https://www.gstatic.com/firebasejs/9.1.1/firebase-database.js";
+import * as firebaseDatabase from "https://www.gstatic.com/firebasejs/9.1.1/firebase-database.js";
 import { getStorage, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 import * as firebase from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";/**********AREGLAR EN UN FUTUROOOOOOOOOOOO********** */
+import * as firebaseLogin from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";/**********AREGLAR EN UN FUTUROOOOOOOOOOOO********** */
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-analytics.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -29,13 +30,57 @@ const database = getDatabase();
 const storage = getStorage()
 
 console.log(firebase);
-console.log(firebase2);
+console.log(firebaseDatabase);
 
 //********************Fireeeeeebase**************************/
 
 /************************************* *cargando la base de datos* *************************************/
 
-downDatabesa();
+document.getElementById('formulario').addEventListener('submit',(e)=>{
+    e.preventDefault();
+
+    //captura de datos
+    const createrUser = {
+        email: document.getElementById('inputEmail4').value+"",
+        password: document.getElementById('inputPasswordNEW').value+"",
+    };
+    
+    
+    //*********create FirebaseLogin******
+    const auth = firebaseLogin.getAuth(app);
+    firebaseLogin.signInWithEmailAndPassword(auth,createrUser.email, createrUser.password)
+    .then((CredencialesUsuario) => {
+        console.log('sing Up');
+        console.log(CredencialesUsuario);
+        console.log('LocalID: '+CredencialesUsuario.user.reloadUserInfo.localId);
+        const idLocal = CredencialesUsuario.user.reloadUserInfo.localId;
+        /********LLamada de datos del firebase database *************/
+        const dataBase = firebaseDatabase.getDatabase(app);
+        firebaseDatabase.get(firebaseDatabase.child(firebaseDatabase.ref(dataBase),`Usuarios/${idLocal}`)).then((snapshot)=>{
+            const Usuario = snapshot.val();
+            if(Usuario.superUser == 1){
+                document.getElementById("loginUser").style.display = 'none';
+                document.getElementById("LoginIn").style.display = 'none';
+                
+                downDatabesa();
+                
+            }
+            else
+            {
+                alert('No tienes permisos');
+                firebaseLogin.signOut(auth).then(()=>{
+                    document.getElementById("LoginIn").style.display = '';
+                    document.getElementById("Logeado").style.display = '';
+                });
+            }
+            
+        });
+        /********Fin LLamada de datos del firebase database *************/
+    })
+    .catch(e=>{
+        alert('Error, no se pudo iniciar secion: \n'+e);
+    });
+});
 
 
 
@@ -45,7 +90,7 @@ document.getElementById("reload").onclick = (e) => {
 
 
 function downDatabesa(){
-    firebase2.get(child(ref(database),"Usuarios/") ).then((snapshot)=>{
+    firebaseDatabase.get(child(ref(database),"Usuarios/") ).then((snapshot)=>{
         if(snapshot.exists()){
             const datosDB = snapshot.val();
             const fragmento = document.createDocumentFragment();
@@ -67,10 +112,6 @@ function downDatabesa(){
                 const agregaCorreo = document.createElement("td");
                 agregaCorreo.textContent = elementDatos.email;
                 agre.appendChild(agregaCorreo);
-
-                const agregaPassword = document.createElement("td");
-                agregaPassword.textContent = elementDatos.password;
-                agre.appendChild(agregaPassword);
 
                 const agregaCiudad = document.createElement("td");
                 agregaCiudad.textContent = elementDatos.ciudad;

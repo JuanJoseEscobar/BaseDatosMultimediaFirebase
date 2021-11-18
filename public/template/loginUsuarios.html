@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/jpg" href="./IMG/pjEHfbdn.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <div id="LoginIn" class="card text-black bg-light mb-3" style="max-width: 100%; display: '';">
+            <div class="card-header text-center">Login</div>
+            <div class="card-body">
+                <div id="badformat" class="alert alert-danger" role="alert" style="display: none;">
+                    El formato de imagen no es valido
+                </div>
+                <div class="formu">
+                    <form class="row g-2" id="formulario" method="POST">
+
+                        <div class="col-12">
+                            <label for="inputEmail4" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Ingrese su email"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputPasswordNEW" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="inputPasswordNEW"
+                                placeholder="Ingrese su contraseña"
+                                title="debe tener 8 caracteres, minimo una mayuscula y un numero" required>
+                        </div>
+                        <div class="col-12 mt-4" style="text-align: center;">
+                            <button type="submit" class="btn btn-success">LOGIN</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="formu">
+                    <div class="col-12" style="text-align: center;">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-secondary" type="button">Gmail</button>
+                            <button class="btn btn-primary" type="button">Facebook</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="logeado" style="display: none; width: 100vw; height: 100vh;">
+        <div id="header" style="display: flex; align-items: center; justify-content: right;">
+            <div style="padding: 10px;"><img id="userIMGRe" src="#" alt="Imagen perfil"
+                    style="height: 50px; width: 50px; object-fit: ''; border-radius: 50px; border: 3px solid #000;">
+            </div>
+            <div style="padding: 10px;">
+                <h1 id="userNameRe"></h1>
+            </div>
+            <div style="padding: 10px;"><button class="btn btn-danger" id="Salir">LogOut</button></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col" style="width: 50%; margin-left: 5px;">
+                        <h2>Busqueda:</h2>
+                    </div>
+                    <div class="col" style="width: 50%;">
+                        <input type="text" class="form-control" id="Busc" placeholder="Nombre Cancion" name = "Busc" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>.
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-6">
+                <div class="card w-100" style="width: 18rem;">
+                    <ul id="audios-Lista" class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-5">
+                                    <h1>Nombre audio</h1>
+                                </div>
+                                <div class="col">
+                                    <h1 style="text-align: right; margin-right: 100px;">Audio</h1>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+    <script type="module" src="../src/LoginApp.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</body>
+
+</html>
